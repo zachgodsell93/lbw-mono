@@ -134,9 +134,11 @@ function SelectionsTable({}: Props) {
     });
   }, [selectionSheet]);
 
-  // Smart auto-refresh every 30 seconds
+  // Auto-refresh at 15 seconds past every minute
   React.useEffect(() => {
-    const interval = setInterval(() => {
+    let interval: NodeJS.Timeout;
+
+    const doRefresh = () => {
       if (canRefresh) {
         console.log("Auto-refreshing selections table...");
         refreshSelectionSheet();
@@ -144,9 +146,26 @@ function SelectionsTable({}: Props) {
       } else {
         console.log("Skipping refresh - user inactive, window hidden, or input focused");
       }
-    }, 30000); // 30 seconds
+    };
 
-    return () => clearInterval(interval);
+    // Calculate ms until next :15
+    const now = new Date();
+    const next = new Date(now);
+    next.setSeconds(15, 0);
+    if (now.getSeconds() >= 15) {
+      next.setMinutes(next.getMinutes() + 1);
+    }
+    const msUntilNext = next.getTime() - now.getTime();
+
+    const initialTimeout = setTimeout(() => {
+      doRefresh();
+      interval = setInterval(doRefresh, 60000);
+    }, msUntilNext);
+
+    return () => {
+      clearTimeout(initialTimeout);
+      if (interval) clearInterval(interval);
+    };
   }, [canRefresh, refreshSelectionSheet]);
 
   return (
