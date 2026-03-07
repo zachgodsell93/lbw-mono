@@ -1,0 +1,17 @@
+services:
+  lbw-backend:
+    container_name: lbw-node-backend
+    build:
+      context: ../..
+      dockerfile: apps/lbw-node-backend/Dockerfile
+    restart: always
+    ports:
+      - "3001:3001"
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 30s

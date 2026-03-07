@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+
+# Turbo
+.turbo/
+
+# Next.js
+.next/
+out/
+
+# Build output
+dist/
+
+# Contentlayer
+.contentlayer/
+
+# Environment files
+.env
+.env*.local
+
+# Supabase temp
+supabase/.temp/
+
+# OS files
+.DS_Store
+
+# Coverage
+coverage/
+
+# IDE
+.vscode/
+.idea/
+
+# Misc
+*.log
+*.tgz
+.swc/

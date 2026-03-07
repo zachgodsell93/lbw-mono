@@ -1,0 +1,24 @@
+{
+  "name": "lbw-mono",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "npm@10.8.2",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "dev:nextjs": "turbo run dev --filter=lbw-nextjs",
+    "dev:backend": "turbo run dev --filter=lbw-node-backend",
+    "build:nextjs": "turbo run build --filter=lbw-nextjs",
+    "build:backend": "turbo run build --filter=lbw-node-backend",
+    "test:nextjs": "turbo run test --filter=lbw-nextjs",
+    "lint:nextjs": "turbo run lint --filter=lbw-nextjs"
+  },
+  "devDependencies": {
+    "turbo": "^2"
+  }
+}
