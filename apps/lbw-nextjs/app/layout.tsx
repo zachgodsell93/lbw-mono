@@ -18,6 +18,8 @@ const fontSans = FontSans({
   variable: "--font-sans",
 });
 
+// TEST
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -36,7 +38,7 @@ export default function RootLayout({
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable
+          fontSans.variable,
         )}
       >
         <noscript>
