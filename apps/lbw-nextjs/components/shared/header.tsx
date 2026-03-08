@@ -231,14 +231,14 @@ export default function Header({}: Props) {
             >
               <div>
                 <span className="text-sm text-nowrap">
-                  {race.venue} R{race.race_number}
+                  {race.venue_name} R{race.race_number}
                 </span>
               </div>
-              {race.market_start_time && (
+              {race.start_time && (
                 <CountdownText
                   boxClass="w-fit-content"
                   textClass="text-sm font-semibold text-nowrap"
-                  jumpTime={race.market_start_time}
+                  jumpTime={race.start_time}
                 />
               )}
             </div>

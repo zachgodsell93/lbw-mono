@@ -84,14 +84,14 @@ export default function NextUp({ metricRef }: Props) {
                       <CountdownText
                         boxClass="w-fit float-left"
                         jumpTime={
-                          result.market_start_time
-                            ? result.market_start_time
+                          result.start_time
+                            ? result.start_time
                             : ""
                         }
                       />
                     </TableCell>
                     <TableCell>
-                      <div className="font-medium">{result.venue}</div>
+                      <div className="font-medium">{result.venue_name}</div>
                       <div className="hidden text-sm text-muted-foreground md:inline">
                         R{result.race_number}
                       </div>

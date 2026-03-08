@@ -4,23 +4,26 @@ import { supabase } from "./supabase/client";
 import Stripe from "stripe";
 
 type User = Database["public"]["Views"]["user_information_full"]["Row"];
-type LayOnly = Database["public"]["Tables"]["lay_only_premium"]["Row"];
-type LadbrokesPrices =
+export type MemberSelection =
   Database["public"]["Views"]["member_selections_ladbrokes_prices"]["Row"];
 
-export const getUsersUpcomingRaces = async (): Promise<LayOnly[]> => {
+export const getUsersUpcomingRaces = async (): Promise<MemberSelection[]> => {
+  const today = moment().format("YYYY-MM-DD");
+  const now = moment().utc().format("YYYY-MM-DD HH:mm");
+
   const { data, error } = await supabase
-    .from("lay_only_premium")
+    .from("member_selections_ladbrokes_prices")
     .select("*")
-    .gt("market_start_time", moment().utc().format("YYYY-MM-DD HH:mm"))
-    .order("market_start_time", { ascending: true });
+    .eq("meeting_date", today)
+    .gt("start_time", now)
+    .order("start_time", { ascending: true });
 
   if (error) {
     console.log(error);
     return [];
   }
-  console.log("upcoming races", data);
-  // Remove duplicats based on venue and race number
+
+  // Remove duplicates based on venue and race number
   const uniqueRaces = data.filter(
     (race, index, self) =>
       index ===

@@ -21,10 +21,12 @@ app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 
   if (
-    process.env.NODE_ENV === "development" &&
-    process.env.ENABLE_CRON === "false"
+    process.env.NODE_ENV !== "production" &&
+    process.env.ENABLE_CRON !== "true"
   ) {
-    console.log("Cron jobs disabled (ENABLE_CRON=false in development)");
+    console.log(
+      "Cron jobs disabled in development (set ENABLE_CRON=true to enable)"
+    );
   } else {
     startCronJobs();
   }

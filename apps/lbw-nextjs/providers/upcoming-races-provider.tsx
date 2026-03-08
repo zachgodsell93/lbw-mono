@@ -1,8 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
-import { getUsersUpcomingRaces } from "@/utils/user";
+import { getUsersUpcomingRaces, MemberSelection } from "@/utils/user";
 import { supabase } from "@/utils/supabase/client";
-import { Database } from "@/types/supabase.types";
 import moment from "moment";
 import { useUser } from "./user-provider";
 
@@ -11,11 +10,9 @@ const initialState = {
   refreshUpcomingRaces: () => {},
 };
 
-type LayOnly = Database["public"]["Tables"]["lay_only_premium"]["Row"];
-
 // initialize context
 interface UpcomingRacesContextType {
-  upcomingRaces: LayOnly[] | null;
+  upcomingRaces: MemberSelection[] | null;
   refreshUpcomingRaces: () => void;
 }
 export const UpcomingRacesContext =
@@ -34,9 +31,9 @@ interface UserProviderProps {
 }
 
 export const UpcomingRacesProvider = ({ children }: UserProviderProps) => {
-  const [upcomingRaces, setUpcomingRaces] = React.useState<LayOnly[] | null>(
-    null
-  );
+  const [upcomingRaces, setUpcomingRaces] = React.useState<
+    MemberSelection[] | null
+  >(null);
   const { user } = useUser();
   const refreshUpcomingRaces = async () => {};
 
