@@ -22,7 +22,7 @@ async function getJohn() {
   return data[0];
 }
 
-// Races starting in next 10 min or up to 1 min ago (volume snapshots)
+// Races starting in next 30 min or up to 1 min ago (volume snapshots)
 async function getVolumeRaces() {
   const startTime = moment()
     .utc()
@@ -30,7 +30,7 @@ async function getVolumeRaces() {
     .format("YYYY-MM-DDTHH:mm:00Z");
   const endTime = moment()
     .utc()
-    .add(10, "minutes")
+    .add(30, "minutes")
     .format("YYYY-MM-DDTHH:mm:00Z");
 
   const { data, error } = await supabase
@@ -169,7 +169,7 @@ export async function executeVolumeAndResults(): Promise<void> {
     },
   });
 
-  // 1. Volume data for upcoming races (10 min pre-race to 1 min post-jump)
+  // 1. Volume data for upcoming races (30 min pre-race to 1 min post-jump)
   const volumeMarketIds = await getVolumeRaces();
   if (volumeMarketIds && volumeMarketIds.length > 0) {
     const volumeResults = await fetchMarketBooks(accessToken, volumeMarketIds);

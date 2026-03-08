@@ -374,11 +374,11 @@ const PriceSection = ({
   price1minCapturedAt?: string | null;
   raceStartTime?: string | null;
 }) => {
-  const { getLbwPriceByHorseName, updateLbwPrice } = useTrend();
+  const { updateLbwPrice } = useTrend();
 
-  const [lbwPrice, setLbwPrice] = React.useState(0);
-  const [latestPrice, setLatestPrice] = React.useState(0);
-  const [oneMinPrice, setOneMinPrice] = React.useState(0);
+  const [lbwPrice, setLbwPrice] = React.useState(lbPrice);
+  const [latestPrice, setLatestPrice] = React.useState(priceLatest);
+  const [oneMinPrice, setOneMinPrice] = React.useState(price1min);
   const [editValue, setEditValue] = React.useState("");
 
   // Determine if race is closed (start time is in the past)
@@ -387,70 +387,12 @@ const PriceSection = ({
     return moment(startTime).isBefore(moment());
   }, [startTime]);
 
-  const fetchMarketData = async (horseName: string) => {
-    try {
-      const date = new Date().toISOString().split("T")[0];
-      // Format date as DD-MM-YYYY
-      const formattedDate = moment(date).format("DD-MM-YYYY");
-      const marketData = await getLbwPriceByHorseName(horseName, formattedDate);
-      console.log("marketData", marketData);
-      setLbwPrice(marketData?.lbw_price || 0);
-      setLatestPrice(marketData?.price_latest || 0);
-      setOneMinPrice(marketData?.price_1min || 0);
-    } catch (error) {
-      console.error("Error fetching market data:", error);
-    }
-  };
-
+  // Keep local state in sync with prop changes (from table-level polling)
   useEffect(() => {
-    if (rowNumber === 0) {
-      // Initial fetch
-      fetchMarketData(horseName);
-
-      // Calculate time until next minute + 5 seconds
-      const now = new Date();
-      const nextMinute = new Date(now);
-      nextMinute.setMinutes(now.getMinutes() + 1);
-      nextMinute.setSeconds(5);
-      nextMinute.setMilliseconds(0);
-
-      const timeUntilNext = nextMinute.getTime() - now.getTime();
-
-      let interval: NodeJS.Timeout;
-
-      // Set timeout for first scheduled run
-      const initialTimeout = setTimeout(() => {
-        // Get time as HH:mm
-        const currentTime = new Date();
-        const timeString = currentTime.toLocaleTimeString("en-US", {
-          hour: "2-digit",
-          minute: "2-digit",
-        });
-        console.log("Updating 2 Minute Process", timeString);
-        fetchMarketData(horseName);
-
-        // Then set up interval to run every minute at 5 seconds past
-        interval = setInterval(() => {
-          const currentTime = new Date();
-          const timeString = currentTime.toLocaleTimeString("en-US", {
-            hour: "2-digit",
-            minute: "2-digit",
-          });
-          console.log("Updating 2 Minute Process", timeString);
-          fetchMarketData(horseName);
-        }, 60000); // 60 seconds
-      }, timeUntilNext);
-
-      return () => {
-        clearTimeout(initialTimeout);
-        if (interval) clearInterval(interval);
-      };
-    } else {
-      setLbwPrice(lbPrice);
-      setLatestPrice(priceLatest);
-      setOneMinPrice(price1min);
-    }
-  }, [horseName, price1min]);
+    setLbwPrice(lbPrice);
+    setLatestPrice(priceLatest);
+    setOneMinPrice(price1min);
+  }, [lbPrice, priceLatest, price1min]);
 
   useEffect(() => {
     setEditValue(lbwPrice.toFixed(2));
