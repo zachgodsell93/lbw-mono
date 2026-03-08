@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { executeLadbrokesPrices } from "@/lib/cron/services/ladbrokes-prices";
-import { flush } from "@/lib/cron/logger";
 
 export const maxDuration = 60;
 
@@ -15,7 +14,5 @@ export async function GET(request: Request) {
     return NextResponse.json({ ok: true });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
-  } finally {
-    await flush();
   }
 }

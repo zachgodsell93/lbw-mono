@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { executeStarterPackage } from "@/lib/cron/services/starter-package";
-import { flush } from "@/lib/cron/logger";
 
 export const maxDuration = 300;
 
@@ -15,7 +14,5 @@ export async function GET(request: Request) {
     return NextResponse.json({ ok: true, executed: result });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
-  } finally {
-    await flush();
   }
 }
