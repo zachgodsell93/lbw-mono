@@ -220,6 +220,7 @@ export async function executeVolumeAndResults(): Promise<void> {
             selection_matched: runner.selectionMatched,
             percentage: runner.percentage,
             rank: i + 1,
+            rank_updated_at: new Date().toISOString(),
           };
 
           // Only set result when status is terminal (not ACTIVE)

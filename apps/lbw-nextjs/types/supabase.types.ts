@@ -1637,6 +1637,7 @@ export type Database = {
           percentage: number | null
           race_total_matched: number | null
           rank: number | null
+          rank_updated_at: string | null
           result: string | null
           selection_id: number
           selection_matched: number | null
@@ -1650,6 +1651,7 @@ export type Database = {
           percentage?: number | null
           race_total_matched?: number | null
           rank?: number | null
+          rank_updated_at?: string | null
           result?: string | null
           selection_id: number
           selection_matched?: number | null
@@ -1663,6 +1665,7 @@ export type Database = {
           percentage?: number | null
           race_total_matched?: number | null
           rank?: number | null
+          rank_updated_at?: string | null
           result?: string | null
           selection_id?: number
           selection_matched?: number | null
@@ -2760,6 +2763,7 @@ export type Database = {
           betfair_vendor_client_id: string | null
           created_at: string | null
           id: string
+          staff: boolean | null
           TBB3_bot: boolean | null
           tbb3_mp1: boolean | null
           tbb3_mp2: boolean | null
@@ -2773,7 +2777,6 @@ export type Database = {
           timezone_name: string
           timezone_offset: number
           token_last_refresh: string | null
-          staff: boolean | null
           use_predictor: boolean | null
         }
         Insert: {
@@ -2783,6 +2786,7 @@ export type Database = {
           betfair_vendor_client_id?: string | null
           created_at?: string | null
           id?: string
+          staff?: boolean | null
           TBB3_bot?: boolean | null
           tbb3_mp1?: boolean | null
           tbb3_mp2?: boolean | null
@@ -2796,7 +2800,6 @@ export type Database = {
           timezone_name?: string
           timezone_offset?: number
           token_last_refresh?: string | null
-          staff?: boolean | null
           use_predictor?: boolean | null
         }
         Update: {
@@ -2806,6 +2809,7 @@ export type Database = {
           betfair_vendor_client_id?: string | null
           created_at?: string | null
           id?: string
+          staff?: boolean | null
           TBB3_bot?: boolean | null
           tbb3_mp1?: boolean | null
           tbb3_mp2?: boolean | null
@@ -2818,7 +2822,6 @@ export type Database = {
           tbb4_take_profit?: number | null
           timezone_name?: string
           timezone_offset?: number
-          staff?: boolean | null
           token_last_refresh?: string | null
           use_predictor?: boolean | null
         }
@@ -3159,6 +3162,7 @@ export type Database = {
           race_number: number | null
           race_start_time: string | null
           rank: number | null
+          rank_updated_at: string | null
           result: string | null
           runner_name: string | null
           runner_number: number | null
@@ -3657,7 +3661,6 @@ export type Database = {
           admin: boolean | null
           auth_id: string | null
           banned_until: string | null
-          staff: boolean | null
           betfair_access_token: string | null
           betfair_refresh_token: string | null
           betfair_vendor_client_id: string | null
@@ -3668,6 +3671,7 @@ export type Database = {
           first_name: string | null
           last_name: string | null
           last_sign_in_at: string | null
+          staff: boolean | null
           subscription_expiry: string | null
           system_name: number | null
           tbb4_bot: boolean | null

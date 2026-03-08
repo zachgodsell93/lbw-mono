@@ -222,7 +222,14 @@ function SelectionsTable({}: Props) {
                   <TableCell>
                     {market.runner_number}. {market.runner_name}
                   </TableCell>
-                  <TableCell>{market.rank ?? "-"}</TableCell>
+                  <TableCell>
+                    <div>{market.rank ?? "-"}</div>
+                    {market.rank_updated_at && (
+                      <div className="text-xs text-muted-foreground">
+                        {moment(market.rank_updated_at).fromNow()}
+                      </div>
+                    )}
+                  </TableCell>
                   <TableCell>
                     <PriceSection
                       lbPrice={market.lbw_price || 0}
