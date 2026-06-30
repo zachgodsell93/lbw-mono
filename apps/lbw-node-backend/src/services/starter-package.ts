@@ -400,6 +400,14 @@ async function processSelections(
 
 // ─── Order Placement ─────────────────────────────────────────────────
 
+const PLACE_BETS_RUN_PROBABILITY = 0.75;
+
+function shouldRunPlaceBets(
+  runProbability: number = PLACE_BETS_RUN_PROBABILITY
+): boolean {
+  return Math.random() < runProbability;
+}
+
 async function placeOrder(
   accessToken: string,
   marketId: string,
@@ -461,6 +469,23 @@ async function placeBets(
   selections: SelectionReturn[],
   masterSettings: MasterSettings
 ) {
+  if (!shouldRunPlaceBets()) {
+    log({
+      message: "Place Bets Skipped",
+      status: 200,
+      level: "info",
+      data: {
+        reason: "random_probability_gate",
+        runProbability: PLACE_BETS_RUN_PROBABILITY,
+        skipProbability: 1 - PLACE_BETS_RUN_PROBABILITY,
+        user: user.email,
+        market_id: race.market_id,
+        selectionCount: selections.length,
+      },
+    });
+    return;
+  }
+
   await Promise.all(
     selections.map(async (s) => {
       if (
